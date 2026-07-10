@@ -1,4 +1,4 @@
-package com.sakthi.employee_management;
+package com.sakthi.employee;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
