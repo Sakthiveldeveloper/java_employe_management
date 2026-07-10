@@ -1,0 +1,794 @@
+# 🚀 Spring Boot Learning Roadmap (Employee Management System)
+
+> Author: Sakthivel A
+> Mentor: Nova 🤖
+> Goal: Learn Spring Boot from scratch by building a production-style Employee Management System.
+
+---
+
+# 📖 Purpose
+
+This project is NOT about copying code.
+
+The goal is to understand:
+
+- Why each layer exists.
+- How Spring Boot works internally.
+- How to debug issues.
+- How to think like a backend engineer.
+
+Every phase should be completed manually.
+
+Never copy the entire code.
+
+Understand → Build → Debug → Test → Improve.
+
+---
+
+# 🏗️ Project Architecture
+
+```
+Browser / Postman
+        │
+        ▼
+ Controller
+        │
+        ▼
+  Service Layer
+        │
+        ▼
+ Repository Layer
+        │
+        ▼
+ Hibernate / JPA
+        │
+        ▼
+     MySQL
+```
+
+---
+
+# 📂 Project Structure
+
+```
+src
+└── main
+    ├── java
+    │   └── com
+    │       └── sakthi
+    │           └── employee
+    │               ├── controller
+    │               ├── service
+    │               ├── repository
+    │               ├── entity
+    │               ├── dto
+    │               ├── exception
+    │               ├── config
+    │               └── EmployeeManagementApplication.java
+    │
+    └── resources
+        └── application.yml
+```
+
+---
+
+# 📌 PHASE 0 – Environment Setup
+
+## Goal
+
+Prepare the development environment.
+
+## Install
+
+- Java 21
+- Maven
+- VS Code
+- Spring Boot Extension Pack
+- MySQL
+- MySQL Workbench
+- Git
+- Postman
+
+## Verify
+
+```
+java -version
+mvn -version
+mysql --version
+git --version
+```
+
+---
+
+# 📌 PHASE 1 – Spring Boot Project
+
+Goal
+
+Create a Spring Boot project.
+
+Learn
+
+- Maven
+- pom.xml
+- Dependencies
+- Package Structure
+
+Debug
+
+If application doesn't start
+
+Check
+
+```
+pom.xml
+
+↓
+
+Java Version
+
+↓
+
+Main Class
+
+↓
+
+Package Name
+```
+
+---
+
+# 📌 PHASE 2 – Entity
+
+Goal
+
+Learn Hibernate Mapping.
+
+Create
+
+```
+Employee.java
+```
+
+Learn
+
+- @Entity
+- @Table
+- @Id
+- @GeneratedValue
+- @Column
+
+Flow
+
+```
+Employee Object
+
+↓
+
+Hibernate
+
+↓
+
+employees Table
+```
+
+Debug
+
+If table isn't created
+
+Check
+
+```
+@Entity
+
+↓
+
+application.yml
+
+↓
+
+ddl-auto
+
+↓
+
+Database Connection
+```
+
+---
+
+# 📌 PHASE 3 – Database Configuration
+
+Learn
+
+application.yml
+
+Understand
+
+```
+Datasource
+
+↓
+
+JDBC
+
+↓
+
+Hibernate
+
+↓
+
+MySQL
+```
+
+Important
+
+```
+ddl-auto = update
+```
+
+Understand WHY.
+
+Don't memorize.
+
+---
+
+# 📌 PHASE 4 – Repository
+
+Goal
+
+Access Database.
+
+Create
+
+```
+EmployeeRepository
+```
+
+Extend
+
+```
+JpaRepository<Employee, Long>
+```
+
+Learn
+
+- Repository Pattern
+- Dynamic Proxy
+- Spring Data JPA
+
+Flow
+
+```
+Controller
+
+↓
+
+Service
+
+↓
+
+Repository
+
+↓
+
+Database
+```
+
+Debug
+
+If Repository not found
+
+Check
+
+```
+Package Structure
+
+↓
+
+Main Class Package
+
+↓
+
+mvn clean
+
+↓
+
+Restart
+```
+
+---
+
+# 📌 PHASE 5 – Service
+
+Goal
+
+Business Logic.
+
+Never access Repository directly from Controller.
+
+Learn
+
+- @Service
+- Constructor Injection
+- Dependency Injection
+
+Example
+
+```
+Controller
+
+↓
+
+Service
+
+↓
+
+Repository
+```
+
+Interview
+
+Why Service Layer?
+
+---
+
+# 📌 PHASE 6 – Controller
+
+Goal
+
+Expose REST APIs.
+
+Learn
+
+- @RestController
+- @RequestMapping
+- @GetMapping
+- @PostMapping
+- @PutMapping
+- @DeleteMapping
+- @PathVariable
+- @RequestBody
+
+Flow
+
+```
+HTTP Request
+
+↓
+
+Controller
+
+↓
+
+Service
+
+↓
+
+Repository
+```
+
+---
+
+# 📌 PHASE 7 – CRUD
+
+Implement
+
+✅ GET ALL
+
+```
+GET /api/employees
+```
+
+✅ GET BY ID
+
+```
+GET /api/employees/{id}
+```
+
+✅ CREATE
+
+```
+POST /api/employees
+```
+
+✅ UPDATE
+
+```
+PUT /api/employees/{id}
+```
+
+✅ DELETE
+
+```
+DELETE /api/employees/{id}
+```
+
+Test
+
+- Browser
+- Postman
+- curl
+
+---
+
+# 📌 PHASE 8 – Debugging Guide
+
+404
+
+Meaning
+
+```
+URL Not Found
+```
+
+Check
+
+- URL
+- Controller
+- Package
+
+---
+
+405
+
+Meaning
+
+```
+Method Not Allowed
+```
+
+Check
+
+- GET
+- POST
+- PUT
+- DELETE Mapping
+
+---
+
+500
+
+Meaning
+
+```
+Application Error
+```
+
+Read
+
+```
+Stack Trace
+
+↓
+
+Root Cause
+
+↓
+
+Fix
+```
+
+Never read only the first line.
+
+Read from the bottom.
+
+---
+
+Bean Not Found
+
+Check
+
+```
+@Service
+
+@Repository
+
+@Component
+
+Package Scan
+```
+
+---
+
+Repository Not Found
+
+Check
+
+```
+JpaRepository
+
+↓
+
+Package
+
+↓
+
+@SpringBootApplication
+```
+
+---
+
+Hibernate Error
+
+Check
+
+```
+Entity
+
+↓
+
+@Column
+
+↓
+
+Database Schema
+
+↓
+
+DDL
+```
+
+---
+
+Database Error
+
+Check
+
+```
+Database Running
+
+↓
+
+Username
+
+↓
+
+Password
+
+↓
+
+application.yml
+```
+
+---
+
+Whitelabel Error
+
+Check
+
+```
+Application Running?
+
+↓
+
+Controller Exists?
+
+↓
+
+Request Mapping?
+```
+
+---
+
+Always Try
+
+```
+mvn clean
+
+↓
+
+Restart Application
+```
+
+---
+
+# 📌 PHASE 9 – Best Practices
+
+✔ Constructor Injection
+
+✔ final fields
+
+✔ Layered Architecture
+
+✔ Meaningful Package Names
+
+✔ One Responsibility per Class
+
+✔ Never put Business Logic in Controller
+
+✔ Never expose Entity directly (later use DTO)
+
+---
+
+# 📌 PHASE 10 – Interview Notes
+
+Understand
+
+Don't Memorize
+
+Questions
+
+- Why Spring Boot?
+- Why JPA?
+- Why Hibernate?
+- Why Repository?
+- Why Service?
+- Why Controller?
+- Why Dependency Injection?
+- Why Constructor Injection?
+- What is Bean?
+- What is IoC?
+- What is Autowiring?
+
+---
+
+# 📌 Learning Rules
+
+Every feature follows this order.
+
+1.
+
+Understand
+
+↓
+
+2.
+
+Draw Flow
+
+↓
+
+3.
+
+Write Code Yourself
+
+↓
+
+4.
+
+Run
+
+↓
+
+5.
+
+Break It
+
+↓
+
+6.
+
+Debug
+
+↓
+
+7.
+
+Fix
+
+↓
+
+8.
+
+Test
+
+↓
+
+9.
+
+Commit
+
+↓
+
+10.
+
+Move to Next Phase
+
+---
+
+# 📌 Git Commit Strategy
+
+Phase 1
+
+```
+git commit -m "Phase 1 - CRUD"
+```
+
+Phase 2
+
+```
+git commit -m "Phase 2 - Spring Security JWT"
+```
+
+Phase 3
+
+```
+git commit -m "Phase 3 - Validation & Exception Handling"
+```
+
+...
+
+---
+
+# 📌 Roadmap
+
+Version 1
+
+✅ CRUD
+
+Version 2
+
+⬜ Spring Security
+
+⬜ JWT
+
+⬜ Refresh Token
+
+⬜ RBAC
+
+Version 3
+
+⬜ Validation
+
+⬜ Global Exception
+
+⬜ Logging
+
+⬜ Response Wrapper
+
+Version 4
+
+⬜ Search
+
+⬜ Pagination
+
+⬜ Sorting
+
+⬜ Filtering
+
+Version 5
+
+⬜ Swagger
+
+Version 6
+
+⬜ Unit Testing
+
+⬜ Integration Testing
+
+Version 7
+
+⬜ Docker
+
+Version 8
+
+⬜ GitHub Actions
+
+Version 9
+
+⬜ Kubernetes
+
+Version 10
+
+⬜ AWS EC2 Deployment
+
+---
+
+# 📌 Final Goal
+
+Don't become someone who can copy Spring Boot code.
+
+Become someone who can:
+
+✔ Design
+
+✔ Build
+
+✔ Debug
+
+✔ Explain
+
+✔ Deploy
+
+✔ Maintain
+
+a production-ready Spring Boot application.
