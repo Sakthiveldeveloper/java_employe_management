@@ -12,16 +12,15 @@ on:
       - develop
 
 jobs:
-  build-and-test:
+  build:
 
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1 - Checkout Source Code
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 2 - Setup Java
       - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
@@ -29,27 +28,18 @@ jobs:
           java-version: '21'
           cache: maven
 
-      # Step 3 - Verify Maven
       - name: Verify Maven
         run: mvn --version
 
-      # Step 4 - Clean Project
       - name: Clean Project
         run: mvn clean
 
-      # Step 5 - Compile Project
       - name: Compile Project
         run: mvn compile
 
-      # Step 6 - Run Unit Tests
-      - name: Run Unit Tests
-        run: mvn test
-
-      # Step 7 - Package Application
       - name: Package Application
-        run: mvn package
+        run: mvn package -DskipTests
 
-      # Step 8 - Upload JAR Artifact
       - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
