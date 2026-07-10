@@ -1,0 +1,76 @@
+Employee Management System (Spring Boot)
+
+Version 1.0
+✓ Spring Boot Basics
+✓ Spring MVC
+✓ MySQL
+✓ Spring Data JPA
+✓ CRUD
+✓ Layered Architecture
+✓ DTOs
+✓ Repository Pattern
+
+↓
+
+Version 2.0
+✓ Spring Security
+✓ JWT
+✓ Refresh Token
+✓ BCrypt
+✓ RBAC
+
+↓
+
+Version 3.0
+✓ Bean Validation
+✓ Global Exception Handler
+✓ Response Wrapper
+✓ SLF4J + Logback
+✓ Request Logging
+
+↓
+
+Version 4.0
+✓ Search
+✓ Pagination
+✓ Sorting
+✓ Filtering
+✓ Specification API
+
+↓
+
+Version 5.0
+✓ Swagger
+✓ OpenAPI
+
+↓
+
+Version 6.0
+✓ Unit Testing
+✓ Mockito
+✓ MockMvc
+✓ Testcontainers
+
+↓
+
+Version 7.0
+✓ Docker
+✓ Docker Compose
+
+↓
+
+Version 8.0
+✓ GitHub Actions
+✓ CI/CD
+
+↓
+
+Version 9.0
+✓ Kubernetes
+
+↓
+
+Version 10.0
+✓ AWS EC2
+✓ Nginx
+✓ SSL
