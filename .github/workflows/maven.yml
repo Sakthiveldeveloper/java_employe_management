@@ -12,15 +12,16 @@ on:
       - develop
 
 jobs:
-  build:
+  build-and-push:
 
     runs-on: ubuntu-latest
 
     steps:
-
+      # Step 1 - Checkout Source Code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Step 2 - Setup Java
       - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
@@ -28,12 +29,15 @@ jobs:
           java-version: '21'
           cache: maven
 
+      # Step 3 - Verify Maven
       - name: Verify Maven
         run: mvn --version
 
+      # Step 4 - Clean Project
       - name: Clean Project
         run: mvn clean
 
+      # Step 5 - Compile Project
       - name: Compile Project
         run: mvn compile
 
@@ -45,3 +49,17 @@ jobs:
         with:
           name: employee-management-jar
           path: target/*.jar
+      # Step 6 - Build Docker Image
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/employee-management:latest .
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/employee-management:latest
