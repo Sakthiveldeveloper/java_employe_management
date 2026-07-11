@@ -6,60 +6,69 @@ on:
       - main
       - develop
 
-  pull_request:
-    branches:
-      - main
-      - develop
-
 jobs:
   build-and-push:
-
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1 - Checkout Source Code
+      # Checkout source code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 2 - Setup Java
+      # Setup Java
       - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: "21"
           cache: maven
 
-      # Step 3 - Verify Maven
+      # Verify Maven Installation
       - name: Verify Maven
         run: mvn --version
 
-      # Step 4 - Clean Project
-      - name: Clean Project
-        run: mvn clean
+      # Build Spring Boot Application
+      - name: Build Spring Boot Application
+        run: mvn clean package -DskipTests
 
-      # Step 5 - Compile Project
-      - name: Compile Project
-        run: mvn compile
-
-      - name: Package Application
-        run: mvn package -DskipTests
-
-      - name: Upload JAR
+      # Upload JAR Artifact
+      - name: Upload JAR Artifact
         uses: actions/upload-artifact@v4
         with:
           name: employee-management-jar
           path: target/*.jar
-      # Step 6 - Build Docker Image
+
+      # Verify Docker Secrets
+      - name: Verify Docker Secrets
+        run: |
+          if [ -z "${{ secrets.DOCKER_USERNAME }}" ]; then
+            echo "DOCKER_USERNAME is missing"
+            exit 1
+          fi
+
+          if [ -z "${{ secrets.DOCKER_PASSWORD }}" ]; then
+            echo "DOCKER_PASSWORD is missing"
+            exit 1
+          fi
+
+          echo "Docker secrets are available."
+
+      # Login to Docker Hub
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      # Build Docker Image
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/employee-management:latest .
+          docker build \
+            -t ${{ secrets.DOCKER_USERNAME }}/employee-management:latest \
+            -t ${{ secrets.DOCKER_USERNAME }}/employee-management:${{ github.sha }} .
 
-      - name: Push Docker Image
+      # Push Docker Images
+      - name: Push Docker Images
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/employee-management:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/employee-management:${{ github.sha }}
