@@ -3,9 +3,9 @@ spring:
     name: employee-management
 
   datasource:
-    url: jdbc:mysql://localhost:3306/employee_management_db
-    username: root
-    password: Admin@sakthi123
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/employee_management_db}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:Admin@sakthi123}
 
   jpa:
     hibernate:
